@@ -12,7 +12,14 @@ bibliography: references.bib
 
 library(tidyverse)
 library(here)
+library(usethis)
+use_git()
+use_github()
 ```
+
+## Importing data from Allison et al. 2020
+
+Importing data from @allison2020 about rock juggling in to different species of otter.
 
 ```{r}
 #| label: import-data
@@ -20,18 +27,10 @@ library(here)
 data_juggling <- read_delim(here("Data/Rock_juggling_frequency_data.csv"),
                    delim = ",") |> 
   rename(rock_juggling = `rj.total`) 
+
 data_hunger <- read_delim(here("Data/Hunger_data.csv"),
                           delim = ",") |> 
   rename(rock_juggling = `rj`)
-```
-
-Importing data from @allison2020 about rock juggling in to different species of otter.
-
-```{r}
-#| average-juggling-sex
-data_juggling |> 
-  group_by(sex) |> 
-  summarise(Mean_rock_juggling = mean(rock_juggling))
 ```
 
 Plotting the age against the amount of rock juggling between the sex.
@@ -60,7 +59,9 @@ plot_hunger
 ```
 
 ```{r}
-#| Juggling-hunger
+#| Den-camera-data
 
+data_den <- read_delim("Data/Den_camera_trap_data.csv",
+                       delim = ",",)
 
 ```
