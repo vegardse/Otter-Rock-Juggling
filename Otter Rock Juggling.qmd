@@ -1,0 +1,66 @@
+---
+title: "Rock Juggling in Otter"
+format: html
+editor: visual
+date: today
+bibliography: references.bib
+---
+
+```{r}
+#| label: packages
+#| echo: false
+
+library(tidyverse)
+library(here)
+```
+
+```{r}
+#| label: import-data
+
+data_juggling <- read_delim(here("Data/Rock_juggling_frequency_data.csv"),
+                   delim = ",") |> 
+  rename(rock_juggling = `rj.total`) 
+data_hunger <- read_delim(here("Data/Hunger_data.csv"),
+                          delim = ",") |> 
+  rename(rock_juggling = `rj`)
+```
+
+Importing data from @allison2020 about rock juggling in to different species of otter.
+
+```{r}
+#| average-juggling-sex
+data_juggling |> 
+  group_by(sex) |> 
+  summarise(Mean_rock_juggling = mean(rock_juggling))
+```
+
+Plotting the age against the amount of rock juggling between the sex.
+
+```{r}
+#| plot-data
+
+plot_juggling <- ggplot(data_juggling, aes(x = age, y = rock_juggling), fill = sex)+
+  geom_point(aes(colour = sex))+
+  geom_smooth()+ 
+  labs(x = "Age",
+       y = " Total observation of rock juggle",
+       title = "Rock juggling against age")
+plot_juggling
+```
+
+```{r}
+#| boxplot-species
+
+plot_hunger <- ggplot(data_hunger, aes(x= hungry, y = rock_juggling))+
+  geom_boxplot()+
+  labs( x = "Hunger",
+        y = "Rock juggling occurences",
+        title = "Species against Rock juggling")
+plot_hunger
+```
+
+```{r}
+#| Juggling-hunger
+
+
+```
